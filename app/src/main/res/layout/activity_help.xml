@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="30dp">
+    <solutions.unforeseen.lostwidgets.views.MovieView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        app:source="@drawable/animated"
+        app:aspectRatio="1.77777777778"/>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/how_to_wave"
+        android:textColor="@color/primary_text_default_material_light"
+        android:textSize="@dimen/abc_text_size_large_material"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/got_it"
+        android:onClick="close"
+        android:layout_marginTop="10dp"/>
+
+</LinearLayout>

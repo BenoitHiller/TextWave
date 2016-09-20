@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <solutions.unforeseen.lostwidgets.settings.NumberPickerPreference
+        android:key="arm_length_preference"
+        android:title="@string/arm_length_title"
+        android:summary="@string/arm_length_summary"
+        android:inputType="number"
+        android:defaultValue="@integer/default_arm_length"
+        app:max="60"
+        app:min="1"
+        app:units="@string/arm_length_units"/>
+
+    <CheckBoxPreference
+        android:key="vibrate_preference"
+        android:title="@string/vibrate_title"
+        android:summary="@string/vibrate_summary"
+        android:defaultValue="true"/>
+
+</PreferenceScreen>
