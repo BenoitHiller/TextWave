@@ -1,6 +1,5 @@
 package com.benoithiller.textwave;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -19,10 +18,10 @@ import android.view.WindowManager;
  * Activity that shows the text scroller
  */
 public class TextScrollerActivity extends Activity implements SensorEventListener {
-    public static String SCROLL_STRING = "com.benoithiller.textwave.SCROLL_STRING";
-    public static String DARK_MODE = "com.benoithiller.textwave.DARK_MODE";
-    public static String ARM_LENGTH = "com.benoithiller.textwave.ARM_LENGTH";
-    public static String VIBRATE = "com.benoithiller.textwave.VIBRATE";
+    public static final String SCROLL_STRING = "com.benoithiller.textwave.SCROLL_STRING";
+    public static final String DARK_MODE = "com.benoithiller.textwave.DARK_MODE";
+    public static final String ARM_LENGTH = "com.benoithiller.textwave.ARM_LENGTH";
+    public static final String VIBRATE = "com.benoithiller.textwave.VIBRATE";
 
     private SensorManager sensorManager;
     private Sensor gravity;
@@ -55,7 +54,7 @@ public class TextScrollerActivity extends Activity implements SensorEventListene
             scroller.setForegroundColor(Color.WHITE);
             scroller.setBackgroundColor(Color.BLACK);
         }
-        scroller.setPadding(0,30,0,30);
+        scroller.setPadding(0, 30, 0, 30);
         scroller.setArmLength(armLength);
         scroller.setVibrate(vibrate);
 
@@ -71,7 +70,7 @@ public class TextScrollerActivity extends Activity implements SensorEventListene
         setContentView(scroller);
     }
 
-    public void moveMessage(double position) {
+    private void moveMessage(double position) {
         scroller.move(position);
     }
 
@@ -116,9 +115,9 @@ public class TextScrollerActivity extends Activity implements SensorEventListene
 
     private static float[] lowPass(float[] input, float[] output) {
         float alpha = 0.7f;
-        if ( output == null ) return input;
+        if (output == null) return input;
 
-        for ( int i=0; i<input.length; i++ ) {
+        for (int i = 0; i < input.length; i++) {
             output[i] = output[i] + alpha * (input[i] - output[i]);
         }
         return output;

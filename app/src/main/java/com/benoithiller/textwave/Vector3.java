@@ -3,18 +3,18 @@ package com.benoithiller.textwave;
 import android.support.annotation.NonNull;
 
 /**
- * Created by notroot on 9/5/15.
+ * Simple 3D Vector math implementation.
  */
 public class Vector3 {
-    public static Vector3 i = new Vector3(1,0,0);
-    public static Vector3 j = new Vector3(0,1,0);
-    public static Vector3 k = new Vector3(0,0,1);
+    public static Vector3 i = new Vector3(1, 0, 0);
+    public static Vector3 j = new Vector3(0, 1, 0);
+    public static Vector3 k = new Vector3(0, 0, 1);
 
     public final float x;
     public final float y;
     public final float z;
 
-    public Vector3(@NonNull float x, @NonNull float y, @NonNull float z) {
+    public Vector3(float x, float y, float z) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -42,6 +42,7 @@ public class Vector3 {
 
     /**
      * project this vector onto another vector
+     *
      * @param other the vector to project onto
      */
     public Vector3 project(Vector3 other) {
@@ -53,6 +54,6 @@ public class Vector3 {
     }
 
     public Vector2 flatten() {
-        return new Vector2(x,y);
+        return new Vector2(x, y);
     }
 }

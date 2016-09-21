@@ -11,12 +11,9 @@ import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.os.Vibrator;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
 
 /**
@@ -26,7 +23,7 @@ public class TextScroller extends View {
 
     // length of arm in inches
     private static final float ARM_LENGTH = 16;
-    private static final double MAX_DEGREEWIDTH = Math.PI/5;
+    private static final double MAX_DEGREEWIDTH = Math.PI / 5;
     private static final int BACKGROUND_COLOR = Color.WHITE;
     private static final int FOREGROUND_COLOR = Color.BLACK;
 
@@ -36,8 +33,6 @@ public class TextScroller extends View {
     private boolean vibrate = true;
 
     private RectF bounds;
-
-    private String text = "Hello World";
 
     private TextScrollRenderer renderer;
 
@@ -51,7 +46,7 @@ public class TextScroller extends View {
             @Override
             public void onClick(View v) {
                 try {
-                    ((Activity)getContext()).finish();
+                    ((Activity) getContext()).finish();
                 } catch (Throwable throwable) {
                     Log.e("finalizer", "Failed to close activity", throwable);
                 }
@@ -99,7 +94,7 @@ public class TextScroller extends View {
         double degreeWidth = MAX_DEGREEWIDTH * (renderer.getWidth() + bounds.width()) / renderer.getMaxWidth();
         double cappedAngle = Math.max(Math.min(degreeWidth, angle), -degreeWidth) / degreeWidth;
         double percent = sinusoidal(cappedAngle) / 2 + 0.5;
-        offset = (float)(percent * renderer.getWidth() - bounds.width()/2);
+        offset = (float) (percent * renderer.getWidth() - bounds.width() / 2);
 
         if (vibrator.hasVibrator() && vibrate) {
             float currentTick = Math.round(percent / VIBRATOR_TICK) * VIBRATOR_TICK;
@@ -151,11 +146,14 @@ public class TextScroller extends View {
         private boolean dataChanged = false;
 
         protected abstract void renderImpl(Canvas canvas, float offset);
+
         /**
          * Get the ratio of the width of the rendered text to its height
+         *
          * @return the ratio as a float.
          */
         public abstract float getWidth();
+
         protected abstract void updateData();
 
         public void render(Canvas canvas, float offset) {
@@ -255,7 +253,7 @@ public class TextScroller extends View {
             textPath.transform(transformMatrix);
             textPath.computeBounds(pathBounds, true);
 
-            bitmap = Bitmap.createBitmap((int)bounds.width(), (int)bounds.height(), Bitmap.Config.ARGB_8888);
+            bitmap = Bitmap.createBitmap((int) bounds.width(), (int) bounds.height(), Bitmap.Config.ARGB_8888);
             bitmapCanvas = new Canvas(bitmap);
             bitmapCanvas.drawColor(backgroundColor);
             bitmapCanvas.save();

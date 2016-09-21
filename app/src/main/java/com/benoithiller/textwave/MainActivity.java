@@ -13,9 +13,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ToggleButton;
 
-public class MainActivity extends Activity{
+public class MainActivity extends Activity {
 
-    public static String SEEN_HELP = "com.benoithiller.textwave.SEEN_HELP";
+    private static final String SEEN_HELP = "com.benoithiller.textwave.SEEN_HELP";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,9 +107,6 @@ public class MainActivity extends Activity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement

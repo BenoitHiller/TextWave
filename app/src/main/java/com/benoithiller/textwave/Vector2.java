@@ -3,16 +3,16 @@ package com.benoithiller.textwave;
 import android.support.annotation.NonNull;
 
 /**
- * Created by notroot on 9/5/15.
+ * Simple 2D Vector math implementation.
  */
 public class Vector2 {
-    public static Vector2 i = new Vector2(1,0);
-    public static Vector2 j = new Vector2(0,1);
+    public static final Vector2 i = new Vector2(1, 0);
+    public static final Vector2 j = new Vector2(0, 1);
 
     public final float x;
     public final float y;
 
-    public Vector2(@NonNull float x, @NonNull float y) {
+    public Vector2(float x, float y) {
         this.x = x;
         this.y = y;
     }
@@ -39,6 +39,7 @@ public class Vector2 {
 
     /**
      * project this vector onto another vector
+     *
      * @param other the vector to project onto
      */
     public Vector2 project(Vector2 other) {
@@ -47,14 +48,16 @@ public class Vector2 {
 
     /**
      * The angle with respect to the positive x axis
+     *
      * @return angle value in the range (-π,π]
      */
     public double angle() {
-        return Math.atan2(y,x);
+        return Math.atan2(y, x);
     }
 
     /**
      * The number of degrees clockwise the other angle is from this one
+     *
      * @param other the angle to compare ours to
      * @return angle value in the range [-π,π]
      */
