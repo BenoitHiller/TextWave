@@ -54,9 +54,7 @@ public class NumberPickerPreference extends DialogPreference {
     @Override
     protected View onCreateDialogView() {
 
-        LayoutInflater inflater =
-                (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.number_picker_preference, null);
+        View view = View.inflate(getContext(), R.layout.number_picker_preference, null);
 
         numberPicker = (NumberPicker) view.findViewById(R.id.number_picker);
 
