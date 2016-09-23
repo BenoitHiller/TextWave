@@ -206,7 +206,7 @@ public class TextScroller extends View {
 
     private class PathTextRenderer extends TextScrollRenderer {
 
-        private final Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.EMBEDDED_BITMAP_TEXT_FLAG);
+        private final Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         private final Path textPath = new Path();
         private final RectF pathBounds = new RectF();
 
