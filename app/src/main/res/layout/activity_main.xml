@@ -27,7 +27,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:textSize="@dimen/abc_text_size_display_1_material"
+            android:textSize="@dimen/text_size_display_1_material"
             android:text="@string/options"/>
 
         <RelativeLayout
@@ -42,7 +42,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/dark_mode_title"
-                android:textSize="@dimen/abc_text_size_title_material"/>
+                android:textSize="@dimen/text_size_title_material"/>
             <TextView
                 android:layout_below="@+id/dark_mode_title"
                 android:layout_toLeftOf="@+id/dark_mode_toggle"
@@ -50,7 +50,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/dark_mode_summary"
-                android:textSize="@dimen/abc_text_size_caption_material"/>
+                android:textSize="@dimen/text_size_caption_material"/>
             <ToggleButton
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
@@ -73,7 +73,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/all_caps_title"
-                android:textSize="@dimen/abc_text_size_title_material"/>
+                android:textSize="@dimen/text_size_title_material"/>
             <TextView
                 android:layout_below="@+id/all_caps_title"
                 android:layout_toLeftOf="@+id/all_caps_toggle"
@@ -81,7 +81,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/all_caps_summary"
-                android:textSize="@dimen/abc_text_size_caption_material"/>
+                android:textSize="@dimen/text_size_caption_material"/>
             <ToggleButton
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
@@ -105,7 +105,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/long_range_title"
-                android:textSize="@dimen/abc_text_size_title_material"/>
+                android:textSize="@dimen/text_size_title_material"/>
             <TextView
                 android:layout_below="@+id/long_range_title"
                 android:layout_toLeftOf="@+id/long_range_toggle"
@@ -113,7 +113,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/long_range_summary"
-                android:textSize="@dimen/abc_text_size_caption_material"/>
+                android:textSize="@dimen/text_size_caption_material"/>
             <ToggleButton
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
