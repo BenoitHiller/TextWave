@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.os.Vibrator;
@@ -207,28 +208,46 @@ public class TextScroller extends View {
     private class PathTextRenderer extends TextScrollRenderer {
 
         private final Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        private final Paint emojiPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         private final Path textPath = new Path();
         private final RectF pathBounds = new RectF();
+        private final Rect textBounds = new Rect();
+        private final Rect scaledBounds = new Rect();
 
         private Bitmap bitmap;
         private Canvas bitmapCanvas;
+        private Bitmap emojiBitmap;
+        private Canvas emojiCanvas;
+        private float scaleChange;
 
         public PathTextRenderer() {
             textPaint.setStyle(Paint.Style.FILL);
             textPaint.setTextSize(100);
             textPaint.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
             textPaint.setColor(foregroundColor);
+
+            emojiPaint.setStyle(Paint.Style.FILL);
+            emojiPaint.setTextSize(100);
+            emojiPaint.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+            emojiPaint.setColor(backgroundColor);
         }
 
         @Override
         public void renderImpl(Canvas canvas, float offset) {
-            bitmap.eraseColor(backgroundColor);
+            bitmap.eraseColor(Color.TRANSPARENT);
             bitmapCanvas.save();
             bitmapCanvas.translate(-pathBounds.left - offset, -pathBounds.top + (bounds.height() - pathBounds.height()) / 2);
             bitmapCanvas.drawPath(textPath, textPaint);
             bitmapCanvas.restore();
 
+            emojiBitmap.eraseColor(Color.TRANSPARENT);
+            emojiCanvas.save();
+            emojiCanvas.translate(-textBounds.left - offset / scaleChange, -textBounds.top + (scaledBounds.height() - textBounds.height()) / 2);
+            emojiCanvas.drawText(text, 0, 0, emojiPaint);
+            emojiCanvas.restore();
+
             canvas.drawColor(backgroundColor);
+            canvas.drawBitmap(emojiBitmap, null, bounds, emojiPaint);
             canvas.drawBitmap(bitmap, null, bounds, textPaint);
         }
 
@@ -240,22 +259,37 @@ public class TextScroller extends View {
         @Override
         public void updateData() {
             textPaint.setColor(foregroundColor);
+            emojiPaint.setColor(backgroundColor);
             textPaint.getTextPath(text, 0, text.length(), 0, 0, textPath);
-            textPath.computeBounds(pathBounds, true);
+            textPaint.getTextBounds(text, 0, text.length(), textBounds);
 
-            float scaleChange = bounds.height() / pathBounds.height();
+            pathBounds.set(textBounds);
+
+            scaleChange = bounds.height() / pathBounds.height();
 
             float width = Math.min(pathBounds.width() * scaleChange, maxWidth);
             scaleChange = width / pathBounds.width();
 
             Matrix transformMatrix = new Matrix();
             transformMatrix.setScale(scaleChange, scaleChange);
+
             textPath.transform(transformMatrix);
-            textPath.computeBounds(pathBounds, true);
+            transformMatrix.mapRect(pathBounds);
+
+            transformMatrix.setScale(1 / scaleChange, 1 / scaleChange);
+            RectF tempRect = new RectF(bounds);
+            transformMatrix.mapRect(tempRect);
+            tempRect.round(scaledBounds);
+
+            emojiBitmap = Bitmap.createBitmap(scaledBounds.width(), scaledBounds.height(), Bitmap.Config.ARGB_8888);
+            emojiCanvas = new Canvas(emojiBitmap);
+            emojiCanvas.save();
+            emojiCanvas.translate(-textBounds.left, -textBounds.top);
+            emojiCanvas.drawText(text, 0, 0, emojiPaint);
+            emojiCanvas.restore();
 
             bitmap = Bitmap.createBitmap((int) bounds.width(), (int) bounds.height(), Bitmap.Config.ARGB_8888);
             bitmapCanvas = new Canvas(bitmap);
-            bitmapCanvas.drawColor(backgroundColor);
             bitmapCanvas.save();
             bitmapCanvas.translate(-pathBounds.left, -pathBounds.top);
             bitmapCanvas.drawPath(textPath, textPaint);
