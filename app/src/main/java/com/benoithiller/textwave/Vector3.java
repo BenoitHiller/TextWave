@@ -1,7 +1,5 @@
 package com.benoithiller.textwave;
 
-import android.support.annotation.NonNull;
-
 /**
  * Simple 3D Vector math implementation.
  */
