@@ -28,8 +28,6 @@ public class TextScroller extends View {
     private static final int BACKGROUND_COLOR = Color.WHITE;
     private static final int FOREGROUND_COLOR = Color.BLACK;
 
-    private static final float VIBRATOR_TICK = 0.1f;
-
     private Vibrator vibrator;
     private boolean vibrate = true;
 
@@ -40,7 +38,7 @@ public class TextScroller extends View {
     private double armLength = ARM_LENGTH;
 
     private float offset = 0;
-    private float lastVibrate = 0.5f;
+    private double lastVibrate = 0;
 
     private void init(Context context) {
         setOnClickListener(new OnClickListener() {
@@ -92,19 +90,21 @@ public class TextScroller extends View {
     }
 
     public void move(double angle) {
-        double degreeWidth = MAX_DEGREEWIDTH * (renderer.getWidth() + bounds.width()) / renderer.getMaxWidth();
-        double cappedAngle = Math.max(Math.min(degreeWidth, angle), -degreeWidth) / degreeWidth;
+        double maxAngle = MAX_DEGREEWIDTH * (renderer.getWidth() + bounds.width()) / renderer.getMaxWidth();
+        double maxTextAngle = (maxAngle - (MAX_DEGREEWIDTH * bounds.width() / renderer.getMaxWidth())) / maxAngle;
+        double cappedAngle = Math.max(Math.min(maxAngle, angle), -maxAngle) / maxAngle;
         double percent = sinusoidal(cappedAngle) / 2 + 0.5;
         offset = (float) (percent * renderer.getWidth() - bounds.width() / 2);
 
         if (vibrator.hasVibrator() && vibrate) {
-            float currentTick = Math.round(percent / VIBRATOR_TICK) * VIBRATOR_TICK;
-            if (lastVibrate != currentTick) {
-                lastVibrate = currentTick;
-                if (lastVibrate == 0 || lastVibrate == 1) {
-                    vibrator.vibrate(20);
-                }
+            double direction = Math.signum(cappedAngle);
+            if (Math.abs(cappedAngle) < maxTextAngle) {
+                direction = 0;
             }
+            if (lastVibrate != direction && direction != 0) {
+                vibrator.vibrate(20);
+            }
+            lastVibrate = direction;
         }
         invalidate();
     }
@@ -142,6 +142,14 @@ public class TextScroller extends View {
         protected String text;
         protected int foregroundColor = FOREGROUND_COLOR;
         protected int backgroundColor = BACKGROUND_COLOR;
+        /**
+         * The maximum width of the displayable text. Currently this is just set externally as the
+         * length of the arc of 2 * DEGREEWIDTH for an arm of the specified length in the device dpi.
+         *
+         * So a better way of doing this would be to require the renderer to acquire its own info
+         * to determine the maximum width of renderable text. That is assuming this measurement
+         * shouldn't just be pulled up into the spec.
+         */
         protected float maxWidth = Float.NaN;
 
         private boolean dataChanged = false;
@@ -149,9 +157,9 @@ public class TextScroller extends View {
         protected abstract void renderImpl(Canvas canvas, float offset);
 
         /**
-         * Get the ratio of the width of the rendered text to its height
+         * Get the full width of the scrollable text
          *
-         * @return the ratio as a float.
+         * @return the full width of the text in dpi
          */
         public abstract float getWidth();
 
